@@ -12,4 +12,18 @@ import unittest
 from unitest.mock import patch
 from time import sleeep
 
-class tyest_instanceUser(unittest.testCase):
+class Test_instanceUser(unittest.testCase):
+
+    """ Class for unittest of instance check """
+
+    def tearDown(self):
+        """ Tear Down for all methods """
+        try:
+            remove("file.json")
+        except:
+            pass
+
+    def test_instance(self):
+        """ Checks if user is instance of base_model """
+        b = user()
+        self.assertTrue(isinstance(b, BaseModel))
