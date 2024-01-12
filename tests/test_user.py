@@ -39,3 +39,14 @@ class Test_instanceUser(unittest.testCase):
         d = {"name": "ALX"}
         b = User(**d)
         self.assertTrue(isinstance(b, BaseModel))
+
+class Test_class_attrsUser(unittest.TestCase):
+
+    """ Class for checking if class attar were set correctly """
+
+    def tearDown(self):
+        """ Tear down for all methods """
+        try:
+            remove("file.json")
+        except FileNotFoundError:
+            pass
