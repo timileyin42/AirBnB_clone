@@ -112,3 +112,84 @@ class Test_init(unittest.TestCase):
                          '2017-09-28T21:03:54.052302')
         self.assertEqual(type(b1.created_at), datetime)
         self.assertEqual(type(b1.updated_at), datetime)
+
+    def test_args_kwargs(self):
+        """ Tests that kwargs works even if there is args """
+
+        d = {'id': 'b6a6e15c-c67d-4312-9a75-9d084935e579',
+             'created_at': '2017-09-28T21:05:54.119427',
+             '__class__': 'BaseModel',
+             'updated_at': '2017-09-28T21:05:54.119572'}
+        b1 = BaseModel(1, "Hello", ["World"], **d)
+        self.assertTrue(hasattr(b1, "id"))
+        self.assertTrue(hasattr(b1, "created_at"))
+        self.assertTrue(hasattr(b1, "updated_at"))
+        self.assertTrue(hasattr(b1, "__class__"))
+        self.assertTrue(b1.__class__ not in b1.__dict__)
+
+        self.assertEqual(b1.id, 'b6a6e15c-c67d-4312-9a75-9d084935e579')
+        self.assertEqual(b1.created_at.isoformat(),
+                         '2017-09-28T21:05:54.119427')
+        self.assertEqual(b1.updated_at.isoformat(),
+                         '2017-09-28T21:05:54.119572')
+
+
+class Test_str__(unittest.TestCase):
+
+    """ Class for testing __str__ method """
+
+    def tearDown(self):
+        """ Tear down for all methods """
+        try:
+            remove("file.json")
+        except FileNotFoundError:
+            pass
+
+    def test_print(self):
+        """ Tests the __str__ method """
+        b1 = BaseModel()
+        s = "[{:s}] ({:s}) {:s}\n"
+        s = s.format(b1.__class__.__name__, b1.id, str(b1.__dict__))
+        with patch('sys.stdout', new=io.StringIO()) as p:
+            print(b1)
+            st = p.getvalue()
+            self.assertEqual(st, s)
+
+    def test_print2(self):
+        """ Tests the __str__ method 2"""
+        b1 = BaseModel()
+        b1.name = "'My First Model"
+        b1.code = 123
+        s = "[{:s}] ({:s}) {:s}\n"
+        s = s.format(b1.__class__.__name__, b1.id, str(b1.__dict__))
+        with patch('sys.stdout', new=io.StringIO()) as p:
+            print(b1)
+            st = p.getvalue()
+            self.assertEqual(st, s)
+
+    def test_print_args(self):
+        """ Test __str__ with args """
+        b1 = BaseModel(None, 1, ["A"])
+        b1.name = "'My First Model"
+        b1.code = 123
+        s = "[{:s}] ({:s}) {:s}\n"
+        s = s.format(b1.__class__.__name__, b1.id, str(b1.__dict__))
+        with patch('sys.stdout', new=io.StringIO()) as p:
+            print(b1)
+            st = p.getvalue()
+            self.assertEqual(st, s)
+
+    def test_print_kwargs(self):
+
+        """ Test __str__ with prev set kwargs """
+        d = {'id': 'b6a6e15c-c67d-4312-9a75-9d084935e579',
+             'created_at': '2017-09-28T21:05:54.119427',
+             '__class__': 'BaseModel',
+             'updated_at': '2017-09-28T21:05:54.119572'}
+        b1 = BaseModel(**d)
+        s = "[{:s}] ({:s}) {:s}\n"
+        s = s.format(b1.__class__.__name__, b1.id, str(b1.__dict__))
+        with patch('sys.stdout', new=io.StringIO()) as p:
+            print(b1)
+            st = p.getvalue()
+            self.assertEqual(st, s)
