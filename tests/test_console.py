@@ -13,7 +13,7 @@ from models.city import City
 from models.amenity import Amenity
 from models.place import Place
 from models.review import Review
-from models.state import State
+from models.state import state
 from os import path, remove
 import unittest
 from unittest.mock import patch

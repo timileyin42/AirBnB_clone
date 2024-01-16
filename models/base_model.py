@@ -7,7 +7,7 @@ for others classes
 """
 
 from datetime import datetime
-from models.engine import file_storage
+from models import storage
 from uuid import uuid4
 
 
