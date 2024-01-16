@@ -69,6 +69,7 @@ class HBNBCommand(cmd.Cmd):
             print("** class doesn't exist **")
             return None
 
+        storage = file_storage.FileStorage()
         all_objs = storage.all()
 
         if len(cmd_argv) < 2:
@@ -94,7 +95,7 @@ class HBNBCommand(cmd.Cmd):
                 print("** class doesn't exist **")
                 return None
 
-        all_objs = storage.all()
+        all_objs = file_storage.all()
         print_list = []
         len_objs = len(all_objs)
         for key, value in all_objs.items():
@@ -128,7 +129,7 @@ class HBNBCommand(cmd.Cmd):
             print("** class doesn't exist **")
             return None
 
-        all_objs = storage.all()
+        all_objs = file_storage.all()
 
         if len(cmd_argv) < 2:
             print("** instance id missing **")
@@ -139,7 +140,7 @@ class HBNBCommand(cmd.Cmd):
 
         if all_objs.get(key, False):
             all_objs.pop(key)
-            storage.save()
+            file_storage.save()
         else:
             print("** no instance found **")
 
@@ -198,7 +199,7 @@ class HBNBCommand(cmd.Cmd):
             print("** instance id missing **")
             return None
 
-        all_objs = storage.all()
+        all_objs = file_storage.all()
 
         key = cmd_argv[0] + '.' + cmd_argv[1]
         if all_objs.get(key, False):
@@ -233,7 +234,7 @@ class HBNBCommand(cmd.Cmd):
                 print("** class doesn't exist **")
                 return None
 
-        all_objs = storage.all()
+        all_objs = file_storage.all()
         count = 0
 
         for key, value in all_objs.items():
