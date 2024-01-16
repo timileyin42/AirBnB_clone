@@ -1,50 +1,57 @@
-#!/usr/bin/python3
-"""This module defines a class to manage file storage for hbnb clone"""
+#!/usr/bin/env python3
+
+""" Module for serializing and deserializing instances to JSON and keeping
+storage of instances
+"""
+
 import json
 
 
 class FileStorage:
-    """This class manages storage of hbnb models in JSON format"""
-    __file_path = 'file.json'
+
+    """ Class that stores and loads instances to/from files in JSON format """
+
+    __file_path = "file.json"
     __objects = {}
 
     def all(self):
-        """Returns a dictionary of models currently in storage"""
+        """ Returns the dictionary __objects """
         return FileStorage.__objects
 
     def new(self, obj):
-        """Adds new object to storage dictionary"""
-        self.all().update({obj.to_dict()['__class__'] + '.' + obj.id: obj})
+        """ Sets in __objects the obj key <obj class name>.id """
+        obj_id = obj.__class__.__name__ + '.' + obj.id
+        FileStorage.__objects[obj_id] = obj
 
     def save(self):
-        """Saves storage dictionary to file"""
-        with open(FileStorage.__file_path, 'w') as f:
-            temp = {}
-            temp.update(FileStorage.__objects)
-            for key, val in temp.items():
-                temp[key] = val.to_dict()
-            json.dump(temp, f)
+        """ serializes __objects to the JSON file (path: __file_path) """
+        jdic = {}
+
+        for key, value in FileStorage.__objects.items():
+            jdic[key] = value.to_dict()
+        with open(self.__file_path, "w", encoding="utf-8") as myfile:
+            json.dump(jdic, myfile)
 
     def reload(self):
-        """Loads storage dictionary from file"""
-        from models.base_model import BaseModel
-        from models.user import User
-        from models.place import Place
-        from models.state import State
-        from models.city import City
-        from models.amenity import Amenity
-        from models.review import Review
-
-        classes = {
-                    'BaseModel': BaseModel, 'User': User, 'Place': Place,
-                    'State': State, 'City': City, 'Amenity': Amenity,
-                    'Review': Review
-                  }
+        """
+        deserializes the JSON file to __objects (only if the JSON file
+        (__file_path) exists ; otherwise, do nothing. If the file
+        doesn’t exist, no exception should be raised)
+        """
         try:
-            temp = {}
-            with open(FileStorage.__file_path, 'r') as f:
-                temp = json.load(f)
-                for key, val in temp.items():
-                        self.all()[key] = classes[val['__class__']](**val)
-        except FileNotFoundError:
+            with open(FileStorage.__file_path, encoding="utf-8") as myfile:
+                from models.base_model import BaseModel
+                from models.user import User
+                from models.city import City
+                from models.amenity import Amenity
+                from models.place import Place
+                from models.review import Review
+                from models.state import State
+
+                pobj = json.load(myfile)
+                for key, value in pobj.items():
+                    clas = value["__class__"]
+                    obj = eval(clas + "(**value)")
+                    FileStorage.__objects[key] = obj
+        except IOError:
             pass
