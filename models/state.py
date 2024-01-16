@@ -4,10 +4,10 @@
 states class that inherits from BaseModel
 """
 
-from models.base_models import BaseModel
+from models.base_model import BaseModel
 
 
-class state(baseModel):
+class state(BaseModel):
 
     """ Class that defines attributes for a state """
 
