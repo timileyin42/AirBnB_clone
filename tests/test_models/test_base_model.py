@@ -101,7 +101,7 @@ class Test_init(unittest.TestCase):
     def test_dates_str_to_datetime(self):
         """ Checks that the proper conversion is made for datetimes """
 
-        d = {'id': '56d43177-cc5f-4d6c-a0c1-e167f8c27337',
+        d = {'id': '49faff9a-6318-451f-87b6-910505c55907',
              'created_at': '2017-09-28T21:03:54.052298',
              '__class__': 'BaseModel',
              'updated_at': '2017-09-28T21:03:54.052302'}
