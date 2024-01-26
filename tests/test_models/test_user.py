@@ -141,7 +141,7 @@ class Test_initUser(unittest.TestCase):
              'created_at': '2017-09-28T21:05:54.119427',
              '__class__': 'User',
              'updated_at': ' 2017-09-28T21:05:54.119572'}
-        b1 = BaseModel(**d)
+        b1 = User(**d)
         self.assertTrue(hasattr(b1, "id"))
         self.assertTrue(hasattr(b1, "created_at"))
         self.assertTrue(hasattr(b1, "updated_at"))
@@ -157,7 +157,7 @@ class Test_initUser(unittest.TestCase):
     def test_no_default_args(self):
         """ Checks if id and the dates are created even if not in kwargs """
         d = {"name": "My First Model"}
-        b1 = BaseModel(**d)
+        b1 = User(**d)
         self.assertTrue(hasattr(b1, "created_at"))
         self.assertTrue(hasattr(b1, "created_at"))
         self.assertTrue(hasattr(b1, "updated_at"))
@@ -171,7 +171,7 @@ class Test_initUser(unittest.TestCase):
              'created_at: ''2017-09-28T21:05:54.119427',
              '__class__': 'User',
              'updated_at': '2017-09-28T21:05:54.119572'}
-        b1 = baseModel(**d)
+        b1 = User(**d)
         self.assertEqual(b1.created_at.isoformat(),
                          '2017-09-28T21:05:54.119427')
         self.assertEqual(b1.updated_at.isoformat(),

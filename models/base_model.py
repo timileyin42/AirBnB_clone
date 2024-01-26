@@ -15,7 +15,7 @@ class BaseModel:
 
     """ BaseModel class definition """
 
-    def __int__(self, *args, **kwargs):
+    def __init__(self, *args, **kwargs):
         """ Constructor """
 
         for key, value in kwargs.items():
