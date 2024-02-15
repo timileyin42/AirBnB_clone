@@ -632,7 +632,7 @@ class Test_update(unittest.TestCase):
         classes = ["BaseModel", "User", "State", "City",
                    "Amenity", "Place", "Review"]
         attr = ["name", "code"]
-        value = ["Holberton", "123"]
+        value = ["My First Model", "123"]
         typeval = [str, str]
 
         for i in classes:
